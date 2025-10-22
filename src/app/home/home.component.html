@@ -1,0 +1,95 @@
+<section class="d-flex flex-column m-4">
+  <div class="d-flex flex-row align-items-center justify-content-between">
+    <div class="d-flex flex-row align-items-center justify-content-right">
+      <img class="col-1 mx-3" src="https://cdn-icons-png.flaticon.com/512/2111/2111125.png" />
+      <div class="fs-4 fw-semibold">Frontender.itacademy</div>
+    </div>
+    <button class="btn btn-dark btn-lg shadow" (click)="goToWelcome()">Enrere</button>
+  </div>
+  <h1
+    class="bg-image d-flex align-items-center justify-content-center my-5 mx-5 fw-bold rounded-5 shadow"
+  >
+    Aconsegeix la millor qualitat
+  </h1>
+</section>
+<section class="d-flex flex-column align-items-center justify-content-center">
+  <div #card1 class="d-flex flex-column col-9 my-2 rounded-5 shadow option-card">
+    <div class="d-flex flex-row align-items-center justify-content-between w-100">
+      <div class="d-flex flex-column m-5">
+        <h2 class="fw-bold">Seo</h2>
+        <span class="fw-semibold">Programació d'una web responsive completa</span>
+      </div>
+      <div class="d-flex flex-row">
+        <h1 class="fw-bolder">300</h1>
+        <span class="euro-sign fw-semibold mx-1">€</span>
+      </div>
+      <div class="d-flex flex-row m-5">
+        <input
+          class="form-check-input mx-1"
+          type="checkbox"
+          id="option1"
+          (change)="toggleBorder($event, card1)"
+        />
+        <label class="form-check-label fw-bold" for="option1">Afegir</label>
+      </div>
+    </div>
+    <div class="d-flex col-6 mx-3">
+      <app-panel></app-panel>
+    </div>
+  </div>
+  <div
+    #card2
+    class="d-flex flex-column align-items-center justify-content-center col-9 my-2 rounded-5 shadow option-card"
+  >
+    <div class="d-flex flex-row align-items-center justify-content-between w-100">
+      <div class="d-flex flex-column m-5">
+        <h2 class="fw-bold">Ads</h2>
+        <span class="fw-semibold">Programació d'una web responsive completa</span>
+      </div>
+      <div class="d-flex flex-row">
+        <h1 class="fw-bolder">400</h1>
+        <span class="euro-sign fw-semibold mx-1">€</span>
+      </div>
+      <div class="d-flex flex-row m-5">
+        <input
+          class="form-check-input mx-1"
+          type="checkbox"
+          id="option2"
+          (change)="toggleBorder($event, card2)"
+        />
+        <label class="form-check-label fw-bold" for="option2">Afegir</label>
+      </div>
+    </div>
+  </div>
+  <div
+    #card3
+    class="d-flex flex-column align-items-center justify-content-center col-9 my-2 rounded-5 shadow option-card"
+  >
+    <div class="d-flex flex-row align-items-center justify-content-between w-100">
+      <div class="d-flex flex-column m-5">
+        <h2 class="fw-bold">Web</h2>
+        <span class="fw-semibold">Programació d'una web responsive completa</span>
+      </div>
+      <div class="d-flex flex-row">
+        <h1 class="fw-bolder">500</h1>
+        <span class="euro-sign fw-semibold mx-1">€</span>
+      </div>
+      <div class="d-flex flex-row m-5">
+        <input
+          class="form-check-input mx-1"
+          type="checkbox"
+          id="option3"
+          (change)="toggleBorder($event, card3)"
+        />
+        <label class="form-check-label fw-bold" for="option3">Afegir</label>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="d-flex flex-row align-items-center justify-content-end w-100 my-5">
+  <h2 class="fw-bold mx-5">Preu pressuposat:</h2>
+  <div class="d-flex flex-row mx-4">
+    <h1 class="fw-bolder">0</h1>
+    <span class="euro-sign fw-semibold mx-1">€</span>
+  </div>
+</section>

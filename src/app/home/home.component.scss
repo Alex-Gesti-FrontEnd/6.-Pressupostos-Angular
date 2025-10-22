@@ -1,0 +1,18 @@
+.bg-image {
+  background-image: url('https://img.freepik.com/vector-gratis/telon-fondo-abstracto-estilo-poli-presentacion-moderna_1017-53594.jpg?semt=ais_hybrid&w=740&q=80');
+  background-size: cover;
+  background-position: center;
+  height: 15vh;
+}
+
+button {
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.euro-sign {
+  line-height: 3.5rem;
+}

@@ -1,0 +1,42 @@
+<section class="d-flex flex-column align-items-center justify-content-center my-2">
+  <div class="d-flex flex-column">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <div>
+        <p class="mb-0 fw-semibold">Número de pàgines:</p>
+      </div>
+      <div class="d-flex align-items-center">
+        <button
+          class="btn btn-outline-secondary btn-sm rounded-circle me-2"
+          (click)="decPages()"
+          [disabled]="pages === 0"
+        >
+          −
+        </button>
+        <div class="count-box mx-1">{{ pages }}</div>
+        <button class="btn btn-outline-secondary btn-sm rounded-circle ms-2" (click)="incPages()">
+          +
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex flex-column">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <div>
+        <p class="mb-0 fw-semibold">Número de llenguatges:</p>
+      </div>
+      <div class="d-flex align-items-center">
+        <button
+          class="btn btn-outline-secondary btn-sm rounded-circle me-2"
+          (click)="decLang()"
+          [disabled]="languages === 0"
+        >
+          −
+        </button>
+        <div class="count-box mx-1">{{ languages }}</div>
+        <button class="btn btn-outline-secondary btn-sm rounded-circle ms-2" (click)="incLang()">
+          +
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
