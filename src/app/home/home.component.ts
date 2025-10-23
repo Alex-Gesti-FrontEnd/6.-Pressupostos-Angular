@@ -1,22 +1,24 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Panel } from '../panel/panel.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [Panel],
+  imports: [Panel, CommonModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
   constructor(private router: Router) {}
+  showPanels: boolean[] = [false, false, false];
 
   goToWelcome() {
     this.router.navigate(['/welcome']);
   }
 
-  toggleBorder(event: Event, card: HTMLElement) {
+  toggleBorder(event: Event, card: HTMLElement, index: number) {
     const inputElement = event.target as HTMLInputElement;
 
     // Desmarcar otros checkboxes
@@ -39,5 +41,8 @@ export class HomeComponent {
     } else {
       card.classList.remove('border', 'border-3', 'border-primary');
     }
+
+    this.showPanels = this.showPanels.map(() => false);
+    if (inputElement.checked && !!card.querySelector('app-panel')) this.showPanels[index] = true;
   }
 }
