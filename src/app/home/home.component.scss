@@ -16,3 +16,20 @@ button {
 .euro-sign {
   line-height: 3.5rem;
 }
+
+.option-card {
+  background-color: #fff;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.01);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  &.selected {
+    border: 2px solid #0d6efd;
+    box-shadow: 0 0 10px rgba(13, 110, 253, 0.4);
+  }
+}

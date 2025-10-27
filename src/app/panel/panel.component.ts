@@ -1,30 +1,59 @@
-import { Component } from '@angular/core';
+import { Component, Output, Input, EventEmitter } from '@angular/core';
+import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-panel',
-  imports: [],
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './panel.component.html',
   styleUrl: './panel.component.scss',
 })
 export class Panel {
-  pages = 0;
-  languages = 0;
+  @Input() serviceId!: number;
+
+  @Output() valuesChanged = new EventEmitter<{
+    id: number;
+    pages: number;
+    languages: number;
+  }>();
+
+  form = new FormGroup({
+    pages: new FormControl(0, [Validators.required, Validators.min(0)]),
+    languages: new FormControl(0, [Validators.required, Validators.min(0)]),
+  });
 
   incPages(): void {
-    this.pages++;
+    const newValue = (this.form.value.pages ?? 0) + 1;
+    this.form.patchValue({ pages: newValue });
+    this.emitValues();
   }
   decPages(): void {
-    if (this.pages > 0) {
-      this.pages--;
+    const current = this.form.value.pages ?? 0;
+    if (current > 0) {
+      this.form.patchValue({ pages: current - 1 });
+      this.emitValues();
     }
   }
 
   incLang(): void {
-    this.languages++;
+    const newValue = (this.form.value.languages ?? 0) + 1;
+    this.form.patchValue({ languages: newValue });
+    this.emitValues();
   }
   decLang(): void {
-    if (this.languages > 0) {
-      this.languages--;
+    const current = this.form.value.languages ?? 0;
+    if (current > 0) {
+      this.form.patchValue({ languages: current - 1 });
+      this.emitValues();
     }
+  }
+
+  emitValues(): void {
+    this.valuesChanged.emit({
+      id: this.serviceId,
+      pages: this.form.value.pages ?? 0,
+      languages: this.form.value.languages ?? 0,
+    });
   }
 }

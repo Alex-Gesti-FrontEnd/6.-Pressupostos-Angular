@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Panel } from '../panel/panel.component';
 import { CommonModule } from '@angular/common';
+import { BudgetService } from '../service/budget.service';
 
 @Component({
   selector: 'app-home',
@@ -11,38 +12,36 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  constructor(private router: Router) {}
-  showPanels: boolean[] = [false, false, false];
+  constructor(private router: Router, private budgetService: BudgetService) {}
+
+  totalCost = 0;
+
+  services = [
+    { id: 0, name: 'Seo', basePrice: 300, enabled: false, pages: 0, languages: 0 },
+    { id: 1, name: 'Ads', basePrice: 400, enabled: false, pages: 0, languages: 0 },
+    { id: 2, name: 'Web', basePrice: 500, enabled: false, pages: 0, languages: 0 },
+  ];
 
   goToWelcome() {
     this.router.navigate(['/welcome']);
   }
 
-  toggleBorder(event: Event, card: HTMLElement, index: number) {
-    const inputElement = event.target as HTMLInputElement;
+  toggleBorder(event: Event, index: number) {
+    const checked = (event.target as HTMLInputElement).checked;
+    this.services[index].enabled = checked;
+    this.updateTotal();
+  }
 
-    // Desmarcar otros checkboxes
-    const inputs = Array.from(
-      document.querySelectorAll<HTMLInputElement>('input.form-check-input')
-    );
-    inputs.forEach((i) => {
-      if (i !== inputElement) i.checked = false;
-    });
-
-    // Quitar bordes de otras tarjetas
-    const cards = Array.from(document.querySelectorAll<HTMLElement>('.option-card'));
-    cards.forEach((c) => {
-      if (c !== card) c.classList.remove('border', 'border-3', 'border-success');
-    });
-
-    // Alternar borde
-    if (inputElement.checked) {
-      card.classList.add('border', 'border-3', 'border-primary');
-    } else {
-      card.classList.remove('border', 'border-3', 'border-primary');
+  updatePanelValues(event: { id: number; pages: number; languages: number }) {
+    const service = this.services.find((s) => s.id === event.id);
+    if (service) {
+      service.pages = event.pages;
+      service.languages = event.languages;
+      this.updateTotal();
     }
+  }
 
-    this.showPanels = this.showPanels.map(() => false);
-    if (inputElement.checked && !!card.querySelector('app-panel')) this.showPanels[index] = true;
+  updateTotal() {
+    this.totalCost = this.budgetService.calculateTotal(this.services);
   }
 }
