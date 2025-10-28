@@ -3,10 +3,9 @@
     <div class="d-flex align-items-center justify-content-between mb-3">
       <div class="d-flex align-items-center">
         <i
-          class="bi bi-info-circle pe-2"
+          class="bi bi-info-circle pe-2 text-primary"
           role="button"
-          data-bs-toggle="modal"
-          data-bs-target="#helpModal"
+          (click)="showHelpModal = true"
         ></i>
         <p class="mb-0 pe-4 fw-semibold">Número de pàgines:</p>
       </div>
@@ -62,3 +61,10 @@
     </div>
   </div>
 </section>
+
+<app-modal
+  [isVisible]="showHelpModal"
+  title="Ajuda sobre els camps"
+  message="Cada pàgina representa una secció del lloc web i cada idioma una traducció completa."
+  (closed)="showHelpModal = false"
+></app-modal>
