@@ -41,6 +41,7 @@
       *ngIf="service.enabled"
       [serviceId]="service.id"
       (valuesChanged)="updatePanelValues($event)"
+      (openHelp)="openHelpFromPanel($event)"
     ></app-panel>
   </div>
 </section>
@@ -51,3 +52,14 @@
     <span class="euro-sign fw-semibold mx-1">€</span>
   </div>
 </section>
+
+<app-modal
+  [isVisible]="showHelpModal"
+  [title]="helpType === 'pages' ? 'Número de pàgines' : 'Número de llenguatges'"
+  [message]="
+    helpType === 'pages'
+      ? 'Afegeix les pàgines que tindrà el teu projecte. El cost de cada pàgina és de 30€.'
+      : 'Afegeix els llenguatges que tindrà el teu projecte. El cost de cada llenguatge és de 30€.'
+  "
+  (closed)="closeModal()"
+></app-modal>

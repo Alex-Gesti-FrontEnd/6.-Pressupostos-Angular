@@ -3,11 +3,12 @@ import { Router } from '@angular/router';
 import { Panel } from '../panel/panel.component';
 import { CommonModule } from '@angular/common';
 import { BudgetService } from '../service/budget.service';
+import { ModalComponent } from '../shared/modal/modal.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [Panel, CommonModule],
+  imports: [Panel, CommonModule, ModalComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
@@ -43,5 +44,17 @@ export class HomeComponent {
 
   updateTotal() {
     this.totalCost = this.budgetService.calculateTotal(this.services);
+  }
+
+  showHelpModal = false;
+  helpType: 'pages' | 'languages' = 'pages';
+
+  openHelpFromPanel(type: 'pages' | 'languages') {
+    this.helpType = type;
+    this.showHelpModal = true;
+  }
+
+  closeModal() {
+    this.showHelpModal = false;
   }
 }

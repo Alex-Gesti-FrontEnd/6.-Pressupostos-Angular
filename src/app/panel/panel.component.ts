@@ -1,12 +1,11 @@
 import { Component, Output, Input, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ModalComponent } from '../shared/modal/modal.component';
 
 @Component({
   selector: 'app-panel',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, ModalComponent],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './panel.component.html',
   styleUrl: './panel.component.scss',
 })
@@ -58,5 +57,5 @@ export class Panel {
     });
   }
 
-  showHelpModal = false;
+  @Output() openHelp = new EventEmitter<'pages' | 'languages'>();
 }
