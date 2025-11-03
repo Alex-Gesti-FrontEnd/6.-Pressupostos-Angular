@@ -20,38 +20,80 @@ describe('PanelComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should increment pages', () => {
-    component.incPages();
-    expect(component.form.value.pages).toBe(1);
-  });
-
-  it('should decrement pages', () => {
-    component.form.patchValue({ pages: 2 });
-    component.decPages();
-    expect(component.form.value.pages).toBe(1);
-  });
-
-  it('should not decrement below 0', () => {
-    component.form.patchValue({ pages: 0 });
-    component.decPages();
     expect(component.form.value.pages).toBe(0);
+    expect(component.form.value.languages).toBe(0);
   });
 
-  it('should emit valuesChanged when pages are modified', () => {
+  it('should increment pages and emit values', () => {
     spyOn(component.valuesChanged, 'emit');
+
     component.incPages();
+    expect(component.form.value.pages).toBe(1);
     expect(component.valuesChanged.emit).toHaveBeenCalledWith({
-      id: component.serviceId,
+      id: 1,
       pages: 1,
       languages: 0,
     });
   });
 
-  it('should emit openHelp with correct type', () => {
+  it('should decrement pages and emit values', () => {
+    component.form.patchValue({ pages: 2 });
+    spyOn(component.valuesChanged, 'emit');
+
+    component.decPages();
+    expect(component.form.value.pages).toBe(1);
+    expect(component.valuesChanged.emit).toHaveBeenCalledWith({
+      id: 1,
+      pages: 1,
+      languages: 0,
+    });
+  });
+
+  it('should not decrement pages below 0', () => {
+    component.form.patchValue({ pages: 0 });
+    component.decPages();
+    expect(component.form.value.pages).toBe(0);
+  });
+
+  it('should increment languages and emit values', () => {
+    spyOn(component.valuesChanged, 'emit');
+
+    component.incLang();
+    expect(component.form.value.languages).toBe(1);
+    expect(component.valuesChanged.emit).toHaveBeenCalledWith({
+      id: 1,
+      pages: 0,
+      languages: 1,
+    });
+  });
+
+  it('should decrement languages and emit values', () => {
+    component.form.patchValue({ languages: 3 });
+    spyOn(component.valuesChanged, 'emit');
+
+    component.decLang();
+    expect(component.form.value.languages).toBe(2);
+    expect(component.valuesChanged.emit).toHaveBeenCalledWith({
+      id: 1,
+      pages: 0,
+      languages: 2,
+    });
+  });
+
+  it('should not decrement languages below 0', () => {
+    component.form.patchValue({ languages: 0 });
+    component.decLang();
+    expect(component.form.value.languages).toBe(0);
+  });
+
+  it('should emit openHelp with correct value when info icon clicked', () => {
     spyOn(component.openHelp, 'emit');
-    component.openHelp.emit('pages');
+    const infoIcons = fixture.debugElement.queryAll(By.css('i.bi-info-circle'));
+
+    infoIcons[0].triggerEventHandler('click', null);
     expect(component.openHelp.emit).toHaveBeenCalledWith('pages');
+
+    infoIcons[1].triggerEventHandler('click', null);
+    expect(component.openHelp.emit).toHaveBeenCalledWith('languages');
   });
 });

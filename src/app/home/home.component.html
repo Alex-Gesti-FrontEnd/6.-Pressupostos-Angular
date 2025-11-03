@@ -14,7 +14,7 @@
 </section>
 <section class="d-flex flex-column align-items-center justify-content-center">
   <div
-    class="d-flex flex-column col-9 my-2 rounded-5 shadow option-card"
+    class="d-flex flex-column col-9 my-2 rounded-5 shadow bg-white option-card"
     *ngFor="let service of services; let i = index"
     [class.selected]="service.enabled"
   >
@@ -52,6 +52,66 @@
     <span class="euro-sign fw-semibold mx-1">€</span>
   </div>
 </section>
+<section class="d-flex align-items-center justify-content-center w-100">
+  <div class="d-flex flex-column col-9 my-4 p-4 rounded-5 shadow bg-white option-card">
+    <h3 class="fw-bold mb-4">Demanar pressupost</h3>
+
+    <form
+      class="d-flex flex-row justify-content-center align-items-center gap-3 w-100"
+      #budgetForm="ngForm"
+      (ngSubmit)="addBudget(budgetForm)"
+    >
+      <div class="d-flex flex-column align-items-start w-25">
+        <input
+          class="form-control input-shadow w-100"
+          type="text"
+          name="clientName"
+          placeholder="Nom"
+          ngModel
+          required
+        />
+      </div>
+      <div class="d-flex flex-column align-items-start w-25">
+        <input
+          class="form-control input-shadow w-100"
+          type="tel"
+          name="phone"
+          placeholder="Telèfon"
+          ngModel
+          required
+          pattern="^[0-9]{9,15}$"
+          #phone="ngModel"
+        />
+        <div *ngIf="phone.invalid && phone.touched" class="text-danger small mt-1">
+          Introdueix un número de telèfon vàlid (només dígits, 9–15 números)
+        </div>
+      </div>
+      <div class="d-flex flex-column align-items-start w-25">
+        <input
+          class="form-control input-shadow w-100"
+          type="text"
+          name="email"
+          placeholder="Email"
+          ngModel
+          required
+          pattern="^[^\s@]+@[^\s@]+$"
+          #email="ngModel"
+        />
+        <div *ngIf="email.invalid && email.touched" class="text-danger small mt-1">
+          Introdueix un correu vàlid (ha de contenir '@')
+        </div>
+      </div>
+
+      <button class="btn btn-dark shadow w-50" type="submit" [disabled]="!budgetForm.valid">
+        Sol·licitar pressupost →
+      </button>
+    </form>
+  </div>
+</section>
+
+<hr class="custom-divider w-75 border-top border-2 border-secondary opacity-50 mx-auto my-4" />
+
+<app-budgets-list></app-budgets-list>
 
 <app-modal
   [isVisible]="showHelpModal"
