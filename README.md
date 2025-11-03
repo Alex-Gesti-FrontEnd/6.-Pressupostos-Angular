@@ -88,7 +88,7 @@ Para ejecutar este proyecto se necesita:
 1.  Clona el repositorio o descarga los archivos ZIP:
 
 ```bash
-  git clone https://github.com/Alex-Gesti-FrontEnd/6.-Pressupostos-Angular.git
+git clone https://github.com/Alex-Gesti-FrontEnd/6.-Pressupostos-Angular.git
 ```
 
 2.  Abre la carpeta del proyecto en tu editor de código.
