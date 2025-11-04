@@ -2,9 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BudgetsListComponent } from './budgets-list.component';
 import { BudgetService } from '../service/budget.service';
 import { FormsModule } from '@angular/forms';
-import { By } from '@angular/platform-browser';
 
-describe('BudgetsListComponent', () => {
+describe('BudgetsListComponent (signals)', () => {
   let component: BudgetsListComponent;
   let fixture: ComponentFixture<BudgetsListComponent>;
   let mockService: jasmine.SpyObj<BudgetService>;
@@ -41,19 +40,19 @@ describe('BudgetsListComponent', () => {
   });
 
   it('should filter budgets by search term', () => {
-    component.searchTerm = 'Anna';
-    const result = component.budgets;
+    component.searchTerm.set('Anna');
+    const result = component.budgets();
     expect(result.length).toBe(1);
     expect(result[0].clientName).toBe('Anna');
   });
 
   it('should toggle sorting direction when sorting twice by same criteria', () => {
     component.sort('price');
-    expect(component.currentSort).toBe('price');
-    expect(component.sortDirection).toBe('asc');
+    expect(component.currentSort()).toBe('price');
+    expect(component.sortDirection()).toBe('asc');
 
     component.sort('price');
-    expect(component.sortDirection).toBe('desc');
+    expect(component.sortDirection()).toBe('desc');
   });
 
   it('should call BudgetService.sortBudgetsBy when sorting', () => {
@@ -62,10 +61,11 @@ describe('BudgetsListComponent', () => {
   });
 
   it('should return correct arrow symbols', () => {
-    component.currentSort = 'date';
-    component.sortDirection = 'asc';
+    component.currentSort.set('date');
+    component.sortDirection.set('asc');
     expect(component.getArrow('date')).toBe('▲');
-    component.sortDirection = 'desc';
+
+    component.sortDirection.set('desc');
     expect(component.getArrow('date')).toBe('▼');
   });
 });

@@ -129,11 +129,10 @@
             placeholder="Email"
             ngModel
             required
-            pattern="^[^\\s@]+@[^\\s@]+$"
             #email="ngModel"
           />
           @if (email.invalid && email.touched) {
-          <div class="text-danger small mt-1">Introdueix un correu vàlid amb '@'</div>
+          <div class="text-danger small mt-1">Introdueix un correu vàlid (ha de contenir '@')</div>
           }
         </div>
 

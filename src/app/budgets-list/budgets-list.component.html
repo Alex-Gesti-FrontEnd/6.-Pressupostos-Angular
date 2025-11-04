@@ -10,35 +10,46 @@
     />
 
     <span
+      role="button"
+      tabindex="0"
       class="fw-semibold cursor-pointer sort-option"
-      [class.active]="currentSort === 'date'"
+      [class.active]="currentSort() === 'date'"
       (click)="sort('date')"
+      aria-label="Ordenar por fecha"
     >
       Data {{ getArrow('date') }}
     </span>
 
     <span
+      role="button"
+      tabindex="0"
+      role="button"
+      tabindex="0"
       class="fw-semibold cursor-pointer sort-option"
-      [class.active]="currentSort === 'price'"
+      [class.active]="currentSort() === 'price'"
       (click)="sort('price')"
+      aria-label="Ordenar por precio"
     >
       Preu {{ getArrow('price') }}
     </span>
 
     <span
+      role="button"
+      tabindex="0"
       class="fw-semibold cursor-pointer sort-option"
-      [class.active]="currentSort === 'name'"
+      [class.active]="currentSort() === 'name'"
       (click)="sort('name')"
+      aria-label="Ordenar por nombre"
     >
       Nom {{ getArrow('name') }}
     </span>
   </div>
 
-  @if (budgets.length === 0) {
+  @if (budgets().length === 0) {
   <div class="d-flex justify-content-center text-muted fst-italic">
     Encara no hi ha pressupostos creats.
   </div>
-  } @for (budget of budgets; track budget.clientName) {
+  } @else { @for (budget of budgets(); track budget.clientName) {
   <div class="d-flex flex-row col-11 my-4 p-4 rounded-5 shadow bg-white option-card mx-auto">
     <div class="d-flex flex-column col-4 mx-2">
       <h4 class="fw-bold mb-0 text-break">{{ budget.clientName }}</h4>
@@ -77,5 +88,5 @@
       Compartir
     </button>
   </div>
-  }
+  } }
 </section>

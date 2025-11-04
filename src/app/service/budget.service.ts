@@ -5,9 +5,12 @@ import { Budget } from '../models/budget';
   providedIn: 'root',
 })
 export class BudgetService {
-  pageLangMultiplier = 30;
+  readonly pageLangMultiplier = 30;
+  readonly budgetsSignal = signal<Budget[]>([]);
 
-  constructor() {}
+  get budgets() {
+    return this.budgetsSignal.asReadonly();
+  }
 
   calculateWebCost(pages: number, languages: number): number {
     return pages * languages * this.pageLangMultiplier;
@@ -21,12 +24,6 @@ export class BudgetService {
       const webCost = this.calculateWebCost(service.pages, service.languages);
       return acc + service.basePrice + webCost;
     }, 0);
-  }
-
-  budgetsSignal = signal<Budget[]>([]);
-
-  get budgets() {
-    return this.budgetsSignal.asReadonly();
   }
 
   addBudget(budget: Budget) {

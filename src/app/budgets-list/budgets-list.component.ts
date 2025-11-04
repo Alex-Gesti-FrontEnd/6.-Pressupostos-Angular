@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, signal, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BudgetService } from '../service/budget.service';
+import type { Budget } from '../models/budget';
 
 @Component({
   selector: 'app-budgets-list',
@@ -10,44 +11,42 @@ import { BudgetService } from '../service/budget.service';
   styleUrl: './budgets-list.component.scss',
 })
 export class BudgetsListComponent {
-  constructor(private budgetService: BudgetService) {}
+  private readonly budgetService = inject(BudgetService);
 
-  searchTerm: string = '';
+  readonly searchTerm = signal('');
+  readonly currentSort = signal<'date' | 'price' | 'name' | null>(null);
+  readonly sortDirection = signal<'asc' | 'desc'>('asc');
 
-  get budgets() {
+  readonly budgets = computed(() => {
     let list = this.budgetService.budgets();
 
-    if (this.searchTerm.trim()) {
-      list = list.filter((b) => b.clientName.toLowerCase().includes(this.searchTerm.toLowerCase()));
+    const term = this.searchTerm().trim().toLowerCase();
+    if (term) {
+      list = list.filter((b: Budget) => b.clientName.toLowerCase().includes(term));
     }
 
     return list;
-  }
+  });
 
-  currentSort: 'date' | 'price' | 'name' | null = null;
-  sortDirection: 'asc' | 'desc' = 'asc';
-
-  sort(criteria: 'date' | 'price' | 'name') {
-    if (this.currentSort === criteria) {
-      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+  sort(criteria: 'date' | 'price' | 'name'): void {
+    if (this.currentSort() === criteria) {
+      this.sortDirection.set(this.sortDirection() === 'asc' ? 'desc' : 'asc');
     } else {
-      this.currentSort = criteria;
-      this.sortDirection = 'asc';
+      this.currentSort.set(criteria);
+      this.sortDirection.set('asc');
     }
 
-    this.budgetService.sortBudgetsBy(criteria, this.sortDirection);
+    this.budgetService.sortBudgetsBy(criteria, this.sortDirection());
   }
 
   getArrow(criteria: 'date' | 'price' | 'name'): string {
-    if (this.currentSort !== criteria) return '';
-    return this.sortDirection === 'asc' ? '▲' : '▼';
+    if (this.currentSort() !== criteria) return '';
+    return this.sortDirection() === 'asc' ? '▲' : '▼';
   }
 
-  shareBudget(budget: any) {
+  shareBudget(budget: Budget): void {
     const baseUrl = window.location.origin;
-
     const servicesData = encodeURIComponent(JSON.stringify(budget.services));
-
     const shareUrl = `${baseUrl}/home?services=${servicesData}`;
 
     navigator.clipboard.writeText(shareUrl);
