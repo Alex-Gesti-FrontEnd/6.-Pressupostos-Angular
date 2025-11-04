@@ -5,7 +5,6 @@ import { BudgetService } from '../service/budget.service';
 
 @Component({
   selector: 'app-budgets-list',
-  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './budgets-list.component.html',
   styleUrl: './budgets-list.component.scss',

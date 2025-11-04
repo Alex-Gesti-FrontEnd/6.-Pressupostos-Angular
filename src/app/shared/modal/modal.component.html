@@ -1,6 +1,6 @@
+@if (isVisible) {
 <div
   class="custom-modal-backdrop d-flex justify-content-center align-items-center position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50"
-  *ngIf="isVisible"
   (click)="closeModal()"
 >
   <div
@@ -11,3 +11,4 @@
     <p>{{ message }}</p>
   </div>
 </div>
+}

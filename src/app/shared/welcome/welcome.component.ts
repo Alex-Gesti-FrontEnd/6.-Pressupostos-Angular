@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-welcome',
-  standalone: true,
   imports: [],
   templateUrl: './welcome.component.html',
   styleUrl: './welcome.component.scss',

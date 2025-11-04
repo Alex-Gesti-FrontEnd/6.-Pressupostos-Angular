@@ -13,9 +13,9 @@
   </h1>
 </section>
 <section class="d-flex flex-column align-items-center justify-content-center">
+  @for (service of services; track service.name; let i = $index) {
   <div
     class="d-flex flex-column col-9 my-2 rounded-5 shadow bg-white option-card"
-    *ngFor="let service of services; let i = index"
     [class.selected]="service.enabled"
   >
     <div class="d-flex flex-row align-items-center justify-content-between w-100">
@@ -37,13 +37,15 @@
         <label class="form-check-label fw-bold">Afegir</label>
       </div>
     </div>
+    @if (service.enabled) {
     <app-panel
-      *ngIf="service.enabled"
       [serviceId]="service.id"
       (valuesChanged)="updatePanelValues($event)"
       (openHelp)="openHelpFromPanel($event)"
     ></app-panel>
+    }
   </div>
+  }
 </section>
 <section class="d-flex flex-row align-items-center justify-content-end w-100 my-5">
   <h2 class="fw-bold mx-5">Preu pressuposat:</h2>
@@ -82,9 +84,11 @@
           pattern="^[0-9]{9,15}$"
           #phone="ngModel"
         />
-        <div *ngIf="phone.invalid && phone.touched" class="text-danger small mt-1">
+        @if (phone.invalid && phone.touched) {
+        <div class="text-danger small mt-1">
           Introdueix un número de telèfon vàlid (només dígits, 9–15 números)
         </div>
+        }
       </div>
       <div class="d-flex flex-column align-items-start w-25">
         <input
@@ -97,9 +101,9 @@
           pattern="^[^\s@]+@[^\s@]+$"
           #email="ngModel"
         />
-        <div *ngIf="email.invalid && email.touched" class="text-danger small mt-1">
-          Introdueix un correu vàlid (ha de contenir '@')
-        </div>
+        @if (email.invalid && email.touched) {
+        <div class="text-danger small mt-1">Introdueix un correu vàlid (ha de contenir '@')</div>
+        }
       </div>
 
       <button class="btn btn-dark shadow w-50" type="submit" [disabled]="!budgetForm.valid">

@@ -34,14 +34,12 @@
     </span>
   </div>
 
-  <div *ngIf="budgets.length === 0" class="d-flex justify-content-center text-muted fst-italic">
+  @if (budgets.length === 0) {
+  <div class="d-flex justify-content-center text-muted fst-italic">
     Encara no hi ha pressupostos creats.
   </div>
-
-  <div
-    *ngFor="let budget of budgets"
-    class="d-flex flex-row col-11 my-4 p-4 rounded-5 shadow bg-white option-card mx-auto"
-  >
+  } @for (budget of budgets; track budget.clientName) {
+  <div class="d-flex flex-row col-11 my-4 p-4 rounded-5 shadow bg-white option-card mx-auto">
     <div class="d-flex flex-column col-4 mx-2">
       <h4 class="fw-bold mb-0 text-break">{{ budget.clientName }}</h4>
       <p class="mb-0 text-break">{{ budget.email }}</p>
@@ -51,16 +49,22 @@
     <div class="d-flex flex-column align-items-start col-5 mx-2">
       <h5 class="fw-semibold mb-2">Serveis seleccionats:</h5>
       <ul class="ms-3 mb-0 ps-0">
-        <li *ngFor="let service of budget.services" class="fw-bold">
+        @for (service of budget.services; track service.name) {
+        <li class="fw-bold">
           {{ service.name }}
-          <span *ngIf="service.pages > 0 || service.languages > 0">
-            (
-            <span *ngIf="service.pages > 0">{{ service.pages }} pàgines</span>
-            <span *ngIf="service.pages > 0 && service.languages > 0">, </span>
-            <span *ngIf="service.languages > 0">{{ service.languages }} llenguatges</span>
-            )
+          @if (service.pages > 0 || service.languages > 0) {
+          <span>
+            ( @if (service.pages > 0) {
+            <span>{{ service.pages }} pàgines</span>
+            } @if (service.pages > 0 && service.languages > 0) {
+            <span>, </span>
+            } @if (service.languages > 0) {
+            <span>{{ service.languages }} llenguatges</span>
+            } )
           </span>
+          }
         </li>
+        }
       </ul>
     </div>
 
@@ -73,4 +77,5 @@
       Compartir
     </button>
   </div>
+  }
 </section>

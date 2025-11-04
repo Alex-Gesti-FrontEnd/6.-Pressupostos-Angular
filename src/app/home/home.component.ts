@@ -9,7 +9,6 @@ import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
-  standalone: true,
   imports: [Panel, CommonModule, ModalComponent, BudgetsListComponent, FormsModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],

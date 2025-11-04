@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-panel',
-  standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './panel.component.html',
   styleUrl: './panel.component.scss',
