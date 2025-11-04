@@ -1,5 +1,5 @@
-import { Component, Output, Input, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, input, output, inject, signal } from '@angular/core';
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,52 +9,44 @@ import { CommonModule } from '@angular/common';
   styleUrl: './panel.component.scss',
 })
 export class Panel {
-  @Input() serviceId!: number;
+  private readonly fb = inject(FormBuilder);
 
-  @Output() valuesChanged = new EventEmitter<{
-    id: number;
-    pages: number;
-    languages: number;
-  }>();
+  readonly serviceId = input<number>(0);
 
-  form = new FormGroup({
-    pages: new FormControl(0, [Validators.required, Validators.min(0)]),
-    languages: new FormControl(0, [Validators.required, Validators.min(0)]),
+  readonly valuesChanged = output<{ id: number; pages: number; languages: number }>();
+  readonly openHelp = output<'pages' | 'languages'>();
+
+  readonly form = this.fb.group({
+    pages: [0, [Validators.required, Validators.min(0)]],
+    languages: [0, [Validators.required, Validators.min(0)]],
   });
 
   incPages(): void {
-    const newValue = (this.form.value.pages ?? 0) + 1;
-    this.form.patchValue({ pages: newValue });
-    this.emitValues();
+    this.updateField('pages', (this.form.value.pages ?? 0) + 1);
   }
   decPages(): void {
     const current = this.form.value.pages ?? 0;
-    if (current > 0) {
-      this.form.patchValue({ pages: current - 1 });
-      this.emitValues();
-    }
+    if (current > 0) this.updateField('pages', current - 1);
   }
 
   incLang(): void {
-    const newValue = (this.form.value.languages ?? 0) + 1;
-    this.form.patchValue({ languages: newValue });
-    this.emitValues();
+    this.updateField('languages', (this.form.value.languages ?? 0) + 1);
   }
   decLang(): void {
     const current = this.form.value.languages ?? 0;
-    if (current > 0) {
-      this.form.patchValue({ languages: current - 1 });
-      this.emitValues();
-    }
+    if (current > 0) this.updateField('languages', current - 1);
   }
 
-  emitValues(): void {
+  private updateField(field: 'pages' | 'languages', value: number): void {
+    this.form.patchValue({ [field]: value });
+    this.emitValues();
+  }
+
+  private emitValues(): void {
     this.valuesChanged.emit({
-      id: this.serviceId,
+      id: this.serviceId(),
       pages: this.form.value.pages ?? 0,
       languages: this.form.value.languages ?? 0,
     });
   }
-
-  @Output() openHelp = new EventEmitter<'pages' | 'languages'>();
 }

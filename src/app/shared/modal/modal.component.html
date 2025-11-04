@@ -1,14 +1,20 @@
-@if (isVisible) {
+@if (isVisible()) {
 <div
-  class="custom-modal-backdrop d-flex justify-content-center align-items-center position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50"
+  class="modal fade show d-flex justify-content-center align-items-center bg-dark bg-opacity-50"
+  role="dialog"
+  aria-modal="true"
+  tabindex="-1"
   (click)="closeModal()"
 >
-  <div
-    class="custom-modal-content d-flex flex-column justify-content-center align-items-center bg-white rounded-5 p-4 shadow-lg"
-    (click)="$event.stopPropagation()"
-  >
-    <h5 class="fw-bold mb-3">{{ title }}</h5>
-    <p>{{ message }}</p>
+  <div class="modal-dialog modal-dialog-centered" (click)="$event.stopPropagation()">
+    <div class="modal-content p-4 rounded-4 shadow-lg border-0 text-center align-items-center">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold mb-0">{{ title() }}</h5>
+      </div>
+      <div class="modal-body">
+        <p class="mb-0">{{ message() }}</p>
+      </div>
+    </div>
   </div>
 </div>
 }

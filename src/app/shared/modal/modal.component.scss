@@ -1,11 +1,6 @@
-.custom-modal-backdrop {
-  backdrop-filter: blur(2px);
-}
-
-.custom-modal-content {
-  width: 400px;
-  max-width: 90%;
-  animation: fadeIn 0.2s ease-in-out;
+.modal {
+  backdrop-filter: blur(3px);
+  animation: fadeIn 0.1s ease-in-out;
 }
 
 @keyframes fadeIn {
