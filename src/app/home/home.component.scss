@@ -1,25 +1,23 @@
-.bg-image {
-  background-image: url('https://img.freepik.com/vector-gratis/telon-fondo-abstracto-estilo-poli-presentacion-moderna_1017-53594.jpg?semt=ais_hybrid&w=740&q=80');
-  background-size: cover;
-  background-position: center;
-  height: 15vh;
+/* === General layout === */
+.logo {
+  width: 48px;
+  height: 48px;
+  max-width: 3rem;
 }
 
-button {
-  transition: all 0.2s ease-in-out;
-
-  &:hover {
-    transform: scale(1.05);
-  }
+.bannertext-section {
+  background: url('https://img.freepik.com/vector-gratis/telon-fondo-abstracto-estilo-poli-presentacion-moderna_1017-53594.jpg?semt=ais_hybrid&w=740&q=80')
+    center/cover no-repeat;
+  padding: 4rem 1rem;
 }
 
 .euro-sign {
-  line-height: 3.5rem;
+  font-size: 1.25rem;
 }
 
+/* === Option cards === */
 .option-card {
   transition: all 0.3s ease;
-  border: 2px solid transparent;
 
   &:hover {
     transform: scale(1.01);
@@ -27,12 +25,58 @@ button {
   }
 
   &.selected {
-    border: 2px solid #0d6efd;
+    border-color: #0d6efd;
     box-shadow: 0 0 10px rgba(13, 110, 253, 0.4);
   }
 }
 
+/* === Input focus === */
 .input-shadow:focus {
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
   outline: none;
+}
+
+/* === Buttons === */
+button {
+  transition: all 0.2s ease-in-out;
+
+  &:hover:not(:disabled) {
+    transform: scale(1.05);
+  }
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .logo {
+    width: 36px;
+    height: 36px;
+  }
+
+  .h2-header {
+    font-size: 0.7rem;
+  }
+
+  .btn-header {
+    font-size: 0.7rem;
+  }
+
+  .bannertext-section {
+    padding: 2rem 1rem;
+    h1 {
+      font-size: 1.3rem;
+    }
+  }
+
+  .option-card {
+    padding: 1rem;
+  }
+
+  .form-label {
+    font-size: 0.9rem;
+  }
+
+  button.btn-lg {
+    font-size: 1rem;
+    padding: 0.6rem 1.2rem;
+  }
 }

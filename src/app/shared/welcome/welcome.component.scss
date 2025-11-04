@@ -1,15 +1,42 @@
-.container {
+.welcome-section {
   max-width: 600px;
+  padding: 2rem;
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  p {
+    font-size: 1.1rem;
+  }
+
+  button {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+    border-radius: 1.5rem;
+
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+  }
 }
 
-h1 {
-  font-size: 2rem;
-}
+/* Mobile */
+@media (max-width: 768px) {
+  .welcome-section {
+    padding: 1.5rem;
 
-button {
-  transition: all 0.2s ease-in-out;
+    h1 {
+      font-size: 1.4rem;
+    }
 
-  &:hover {
-    transform: scale(1.05);
+    p {
+      font-size: 0.75rem;
+    }
+
+    button {
+      width: 100%;
+      font-size: 0.8rem;
+    }
   }
 }

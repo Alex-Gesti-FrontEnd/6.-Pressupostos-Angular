@@ -25,7 +25,8 @@ describe('WelcomeComponent', () => {
   });
 
   it('should navigate to home', () => {
-    component.goToHome();
+    const button = fixture.nativeElement.querySelector('button');
+    button.click();
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/home']);
   });
 });

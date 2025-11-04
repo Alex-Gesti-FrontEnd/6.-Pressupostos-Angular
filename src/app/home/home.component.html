@@ -1,129 +1,169 @@
-<section class="d-flex flex-column m-4">
-  <div class="d-flex flex-row align-items-center justify-content-between">
-    <div class="d-flex flex-row align-items-center justify-content-right">
-      <img class="col-1 mx-3" src="https://cdn-icons-png.flaticon.com/512/2111/2111125.png" />
-      <div class="fs-4 fw-semibold">Frontender.itacademy</div>
-    </div>
-    <button class="btn btn-dark btn-lg shadow" (click)="goToWelcome()">Enrere</button>
-  </div>
-  <h1
-    class="bg-image d-flex align-items-center justify-content-center my-5 mx-5 fw-bold rounded-5 shadow"
+<main class="container-fluid py-4">
+  <!-- Header -->
+  <header
+    class="d-flex flex-wrap align-items-center justify-content-between px-3 mb-4 gap-3"
+    role="banner"
   >
-    Aconsegeix la millor qualitat
-  </h1>
-</section>
-<section class="d-flex flex-column align-items-center justify-content-center">
-  @for (service of services; track service.name; let i = $index) {
-  <div
-    class="d-flex flex-column col-9 my-2 rounded-5 shadow bg-white option-card"
-    [class.selected]="service.enabled"
-  >
-    <div class="d-flex flex-row align-items-center justify-content-between w-100">
-      <div class="d-flex flex-column m-5">
-        <h2 class="fw-bold">{{ service.name }}</h2>
-        <span class="fw-semibold">Programació d'una web responsive completa</span>
-      </div>
-      <div class="d-flex flex-row">
-        <h1 class="fw-bolder">{{ service.basePrice }}</h1>
-        <span class="euro-sign fw-semibold mx-1">€</span>
-      </div>
-      <div class="d-flex flex-row m-5">
-        <input
-          class="form-check-input mx-1"
-          type="checkbox"
-          [checked]="service.enabled"
-          (change)="toggleBorder($event, i)"
-        />
-        <label class="form-check-label fw-bold">Afegir</label>
-      </div>
+    <div class="d-flex align-items-center gap-3 flex-shrink-1 flex-wrap text-center text-md-start">
+      <img
+        class="logo img-fluid"
+        alt="Fake logo Frontend IT Academy"
+        src="https://cdn-icons-png.flaticon.com/512/2111/2111125.png"
+      />
+      <h2 class="fw-semibold mb-0 s-4 text-wrap h2-header">Frontender.itacademy</h2>
     </div>
-    @if (service.enabled) {
-    <app-panel
-      [serviceId]="service.id"
-      (valuesChanged)="updatePanelValues($event)"
-      (openHelp)="openHelpFromPanel($event)"
-    ></app-panel>
-    }
-  </div>
-  }
-</section>
-<section class="d-flex flex-row align-items-center justify-content-end w-100 my-5">
-  <h2 class="fw-bold mx-5">Preu pressuposat:</h2>
-  <div class="d-flex flex-row mx-4">
-    <h1 class="fw-bolder">{{ totalCost }}</h1>
-    <span class="euro-sign fw-semibold mx-1">€</span>
-  </div>
-</section>
-<section class="d-flex align-items-center justify-content-center w-100">
-  <div class="d-flex flex-column col-9 my-4 p-4 rounded-5 shadow bg-white option-card">
-    <h3 class="fw-bold mb-4">Demanar pressupost</h3>
-
-    <form
-      class="d-flex flex-row justify-content-center align-items-center gap-3 w-100"
-      #budgetForm="ngForm"
-      (ngSubmit)="addBudget(budgetForm)"
+    <button
+      type="button"
+      class="btn btn-outline-dark fw-semibold shadow-sm px-3 py-2 btn-header"
+      aria-label="Volver a la pagina de welcome"
+      (click)="goToWelcome()"
     >
-      <div class="d-flex flex-column align-items-start w-25">
-        <input
-          class="form-control input-shadow w-100"
-          type="text"
-          name="clientName"
-          placeholder="Nom"
-          ngModel
-          required
-        />
-      </div>
-      <div class="d-flex flex-column align-items-start w-25">
-        <input
-          class="form-control input-shadow w-100"
-          type="tel"
-          name="phone"
-          placeholder="Telèfon"
-          ngModel
-          required
-          pattern="^[0-9]{9,15}$"
-          #phone="ngModel"
-        />
-        @if (phone.invalid && phone.touched) {
-        <div class="text-danger small mt-1">
-          Introdueix un número de telèfon vàlid (només dígits, 9–15 números)
+      Enrere
+    </button>
+  </header>
+  <!-- Texto "Inspirador" -->
+  <section class="bannertext-section w-100 bg-white text-center rounded-5 shadow my-5">
+    <h1 class="fw-bold">Aconsegeix la millor qualitat</h1>
+  </section>
+  <!-- Lista de servicios -->
+  <section
+    class="d-flex flex-column align-items-center justify-content-center"
+    aria-labelledby="services-title"
+  >
+    @for (service of services(); track service.name; let i = $index) {
+    <article
+      class="d-flex flex-column col-12 col-md-9 my-2 p-4 rounded-5 shadow bg-white border border-2 border-transparent option-card"
+      [class.selected]="service.enabled"
+    >
+      <div class="d-flex flex-wrap align-items-center justify-content-between">
+        <div class="d-flex flex-column my-3">
+          <h3 class="fw-bold mb-1">{{ service.name }}</h3>
+          <p class="fw-semibold text-muted mb-0">Programació d'una web responsive completa</p>
         </div>
-        }
+        <div class="price-display text-end my-3">
+          <span class="h2 fw-bolder">{{ service.basePrice }}</span>
+          <span class="euro-sign fw-semibold mx-1">€</span>
+        </div>
+        <div class="form-check my-3">
+          <input
+            id="service-{{ i }}"
+            class="form-check-input"
+            type="checkbox"
+            role="switch"
+            [checked]="service.enabled"
+            (change)="toggleBorder($event, i)"
+            aria-label="Afegir servei {{ service.name }}"
+          />
+          <label class="form-check-label fw-semibold" for="service-{{ i }}"> Afegir </label>
+        </div>
       </div>
-      <div class="d-flex flex-column align-items-start w-25">
-        <input
-          class="form-control input-shadow w-100"
-          type="text"
-          name="email"
-          placeholder="Email"
-          ngModel
-          required
-          pattern="^[^\s@]+@[^\s@]+$"
-          #email="ngModel"
-        />
-        @if (email.invalid && email.touched) {
-        <div class="text-danger small mt-1">Introdueix un correu vàlid (ha de contenir '@')</div>
-        }
-      </div>
+      @if (service.enabled) {
+      <app-panel
+        [serviceId]="service.id"
+        (valuesChanged)="updatePanelValues($event)"
+        (openHelp)="openHelpFromPanel($event)"
+      ></app-panel>
+      }
+    </article>
+    }
+  </section>
 
-      <button class="btn btn-dark shadow w-50" type="submit" [disabled]="!budgetForm.valid">
-        Sol·licitar pressupost →
-      </button>
-    </form>
-  </div>
-</section>
+  <!-- Total -->
+  <section
+    class="total-section container d-flex flex-wrap align-items-center justify-content-end my-5"
+    aria-live="polite"
+  >
+    <h2 class="fw-bold mx-3">Preu pressupostat:</h2>
+    <div class="d-flex flex-row align-items-baseline">
+      <span class="display-5 fw-bolder">{{ totalCost() }}</span>
+      <span class="euro-sign fw-semibold ms-1">€</span>
+    </div>
+  </section>
 
-<hr class="custom-divider w-75 border-top border-2 border-secondary opacity-50 mx-auto my-4" />
+  <!-- Formulario de presupuesto -->
+  <section
+    class="budget-form container d-flex justify-content-center align-items-center my-4"
+    aria-labelledby="budget-title"
+  >
+    <div class="col-12 col-md-9 p-4 rounded-5 shadow bg-white">
+      <h3 id="budget-title" class="fw-bold mb-4">Demanar pressupost</h3>
 
-<app-budgets-list></app-budgets-list>
+      <form class="row g-3 align-items-end" #budgetForm="ngForm" (ngSubmit)="addBudget(budgetForm)">
+        <div class="col-12 col-md-4">
+          <input
+            id="clientName"
+            class="form-control input-shadow"
+            type="text"
+            name="clientName"
+            placeholder="Nom"
+            ngModel
+            required
+          />
+        </div>
 
-<app-modal
-  [isVisible]="showHelpModal"
-  [title]="helpType === 'pages' ? 'Número de pàgines' : 'Número de llenguatges'"
-  [message]="
-    helpType === 'pages'
-      ? 'Afegeix les pàgines que tindrà el teu projecte. El cost de cada pàgina és de 30€.'
-      : 'Afegeix els llenguatges que tindrà el teu projecte. El cost de cada llenguatge és de 30€.'
-  "
-  (closed)="closeModal()"
-></app-modal>
+        <div class="col-12 col-md-4">
+          <input
+            id="phone"
+            class="form-control input-shadow"
+            type="tel"
+            name="phone"
+            placeholder="Telèfon"
+            ngModel
+            required
+            pattern="^[0-9]{9,15}$"
+            #phone="ngModel"
+          />
+          @if (phone.invalid && phone.touched) {
+          <div class="text-danger small mt-1">
+            Introdueix un número de telèfon vàlid (9–15 dígits)
+          </div>
+          }
+        </div>
+
+        <div class="col-12 col-md-4">
+          <input
+            id="email"
+            class="form-control input-shadow"
+            type="email"
+            name="email"
+            placeholder="Email"
+            ngModel
+            required
+            pattern="^[^\\s@]+@[^\\s@]+$"
+            #email="ngModel"
+          />
+          @if (email.invalid && email.touched) {
+          <div class="text-danger small mt-1">Introdueix un correu vàlid amb '@'</div>
+          }
+        </div>
+
+        <div class="col-12">
+          <button
+            class="btn btn-dark btn-lg shadow w-100"
+            type="submit"
+            [disabled]="!budgetForm.valid"
+          >
+            Sol·licitar pressupost
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <hr class="custom-divider w-75 border-top border-2 border-secondary opacity-50 mx-auto my-5" />
+
+  <!-- Lista de presupuestos -->
+  <app-budgets-list></app-budgets-list>
+
+  <!-- Modal de ayuda -->
+  <app-modal
+    [isVisible]="showHelpModal()"
+    [title]="helpType() === 'pages' ? 'Número de pàgines' : 'Número de llenguatges'"
+    [message]="
+      helpType() === 'pages'
+        ? 'Afegeix les pàgines del teu projecte. El cost per pàgina és de 30 €.'
+        : 'Afegeix els llenguatges del teu projecte. El cost per llenguatge és de 30 €.'
+    "
+    (closed)="closeModal()"
+  ></app-modal>
+</main>

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { signal } from '@angular/core';
 import { HomeComponent } from './home.component';
 import { BudgetService } from '../service/budget.service';
 import { FormsModule } from '@angular/forms';
@@ -49,14 +50,14 @@ describe('HomeComponent', () => {
   it('should toggle service enabled state', () => {
     const event = { target: { checked: true } } as any;
     component.toggleBorder(event, 0);
-    expect(component.services[0].enabled).toBeTrue();
+    expect(component.services()[0].enabled).toBeTrue();
     expect(mockBudgetService.calculateTotal).toHaveBeenCalled();
   });
 
   it('should update panel values correctly', () => {
     component.updatePanelValues({ id: 0, pages: 3, languages: 2 });
-    expect(component.services[0].pages).toBe(3);
-    expect(component.services[0].languages).toBe(2);
+    expect(component.services()[0].pages).toBe(3);
+    expect(component.services()[0].languages).toBe(2);
     expect(mockBudgetService.calculateTotal).toHaveBeenCalled();
   });
 
@@ -73,8 +74,10 @@ describe('HomeComponent', () => {
 
     spyOn(window, 'alert');
 
-    component.totalCost = 500;
-    component.services[0].enabled = true;
+    (component as any).totalCost = signal(500);
+    const services = component.services();
+    services[0].enabled = true;
+    (component as any).services = signal(services);
 
     component.addBudget(formMock);
 
@@ -91,10 +94,10 @@ describe('HomeComponent', () => {
 
   it('should open and close modal correctly', () => {
     component.openHelpFromPanel('pages');
-    expect(component.showHelpModal).toBeTrue();
-    expect(component.helpType).toBe('pages');
+    expect(component.showHelpModal()).toBeTrue();
+    expect(component.helpType()).toBe('pages');
 
     component.closeModal();
-    expect(component.showHelpModal).toBeFalse();
+    expect(component.showHelpModal()).toBeFalse();
   });
 });
