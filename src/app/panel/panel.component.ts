@@ -1,4 +1,4 @@
-import { Component, input, output, inject, signal } from '@angular/core';
+import { Component, effect, input, output, inject, signal } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -12,6 +12,8 @@ export class Panel {
   private readonly fb = inject(FormBuilder);
 
   readonly serviceId = input<number>(0);
+  readonly pages = input<number>(0);
+  readonly languages = input<number>(0);
 
   readonly valuesChanged = output<{ id: number; pages: number; languages: number }>();
   readonly openHelp = output<'pages' | 'languages'>();
@@ -20,6 +22,18 @@ export class Panel {
     pages: [0, [Validators.required, Validators.min(0)]],
     languages: [0, [Validators.required, Validators.min(0)]],
   });
+
+  constructor() {
+    effect(() => {
+      this.form.patchValue(
+        {
+          pages: this.pages(),
+          languages: this.languages(),
+        },
+        { emitEvent: false } // evita disparar valueChanges en cada actualización
+      );
+    });
+  }
 
   incPages(): void {
     this.updateField('pages', (this.form.value.pages ?? 0) + 1);

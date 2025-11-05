@@ -60,6 +60,8 @@
       @if (service.enabled) {
       <app-panel
         [serviceId]="service.id"
+        [pages]="service.pages"
+        [languages]="service.languages"
         (valuesChanged)="updatePanelValues($event)"
         (openHelp)="openHelpFromPanel($event)"
       ></app-panel>
