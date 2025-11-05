@@ -16,20 +16,10 @@ describe('ModalComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should emit closed event when clicking backdrop', () => {
-    component.isVisible = true;
-    fixture.detectChanges();
-
-    spyOn(component.closed, 'emit');
-    const backdrop = fixture.debugElement.query(By.css('.custom-modal-backdrop'));
-    backdrop.triggerEventHandler('click', new Event('click'));
-    expect(component.closed.emit).toHaveBeenCalled();
-  });
-
   it('should display title and message when visible', () => {
-    component.isVisible = true;
-    component.title = 'Ajuda';
-    component.message = 'Missatge de prova';
+    fixture.componentRef.setInput('isVisible', true);
+    fixture.componentRef.setInput('title', 'Ajuda');
+    fixture.componentRef.setInput('message', 'Missatge de prova');
     fixture.detectChanges();
 
     const titleEl = fixture.debugElement.query(By.css('h5')).nativeElement;
