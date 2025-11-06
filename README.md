@@ -210,7 +210,7 @@ ng serve
 
 ---
 
-### Testing
+### 🧪 Testing
 
 1. Ejecuta los tests con:
 
