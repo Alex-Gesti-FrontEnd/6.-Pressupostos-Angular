@@ -259,11 +259,11 @@ A continuación se mostrará algunas capturas de la aplicación en funcionamient
 - **Formato móvil**
 
 <p align="center">
-  <img src="./public/img/movileScreen1.png" alt="Demo 1" width="450"/>
+  <img src="./public/img/movileScreen1.png" alt="Demo 1" width="250"/>
 </p>
 
 <p align="center">
-  <img src="./public/img/movileScreen2.png" alt="Demo 1" width="450"/>
+  <img src="./public/img/movileScreen2.png" alt="Demo 1" width="250"/>
 </p>
 
 ---
